@@ -84,9 +84,57 @@ let learned=new Set(),stars=0;
 try{learned=new Set(JSON.parse(localStorage.getItem('kidLearned')||'[]'));stars=+(localStorage.getItem('kidStars')||0);correct=+(localStorage.getItem('kidCorrect')||0)}catch(e){}
 const $=id=>document.getElementById(id);
 function show(id){['home','learn','game','stats'].forEach(x=>$(x).classList.toggle('hidden',x!==id));window.scrollTo({top:0,behavior:'smooth'})}
-function speak(text,rate=0.82){if(!('speechSynthesis'in window)){alert('Thiết bị này chưa hỗ trợ đọc tiếng Anh. Hãy thử mở bằng Chrome và kiểm tra cài đặt giọng nói.');return}
- speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=rate;u.pitch=1.05;
- const voices=speechSynthesis.getVoices();const v=voices.find(v=>v.lang==='en-US'&&/Samantha|Jenny|Aria|Google US English|United States/i.test(v.name))||voices.find(v=>v.lang==='en-US')||voices.find(v=>v.lang.startsWith('en'));if(v)u.voice=v;speechSynthesis.speak(u)}
+let voiceLoadPromise=null;
+function loadEnglishVoice(){
+ return new Promise(resolve=>{
+  if(!('speechSynthesis' in window)){resolve(null);return}
+  const synth=window.speechSynthesis;
+  const choose=()=>{
+   const voices=synth.getVoices()||[];
+   const voice=voices.find(v=>/^en-US/i.test(v.lang)&&/Google US English|Jenny|Aria|Samantha|United States/i.test(v.name))
+    ||voices.find(v=>/^en-US/i.test(v.lang))
+    ||voices.find(v=>/^en/i.test(v.lang));
+   if(voice){resolve(voice);return true}
+   return false;
+  };
+  if(choose())return;
+  let done=false;
+  const finish=()=>{if(done)return;done=true;clearTimeout(timer);synth.removeEventListener?.('voiceschanged',onChanged);resolve((synth.getVoices()||[]).find(v=>/^en/i.test(v.lang))||null)};
+  const onChanged=()=>{if(choose()){done=true;clearTimeout(timer);synth.removeEventListener?.('voiceschanged',onChanged)}};
+  synth.addEventListener?.('voiceschanged',onChanged);
+  const timer=setTimeout(finish,1800);
+ });
+}
+async function speak(text,rate=0.82){
+ if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)){
+  alert('Trình duyệt này chưa hỗ trợ đọc thành tiếng. Em hãy mở link bằng Google Chrome nhé.');return;
+ }
+ const synth=window.speechSynthesis;
+ try{
+  synth.cancel();
+  const voice=await loadEnglishVoice();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US';u.rate=rate;u.pitch=1.03;
+  if(voice)u.voice=voice;
+  u.onerror=(event)=>{
+   if(event.error!=='canceled'&&event.error!=='interrupted'){
+    $('tip').textContent='Chưa phát được giọng đọc. Hãy kiểm tra âm lượng và cài đặt Text-to-speech/Chuyển văn bản thành giọng nói trên điện thoại.';
+   }
+  };
+  u.onstart=()=>{if($('tip'))$('tip').textContent='🔊 Đang đọc: '+text};
+  u.onend=()=>{};
+  synth.speak(u);
+  setTimeout(()=>{if(synth.paused)synth.resume()},250);
+  setTimeout(()=>{
+   if(synth.speaking||synth.pending)return;
+   if(!voice && !synth.speaking){
+    $('tip').textContent='Điện thoại chưa cung cấp giọng tiếng Anh. Hãy kiểm tra cài đặt Chuyển văn bản thành giọng nói (Text-to-speech).';
+   }
+  },1200);
+ }catch(e){
+  $('tip').textContent='Chưa phát được âm thanh. Hãy thử mở app bằng Chrome và kiểm tra dịch vụ giọng nói trên điện thoại.';
+ }
+}
 function persist(){try{localStorage.setItem('kidLearned',JSON.stringify([...learned]));localStorage.setItem('kidStars',stars);localStorage.setItem('kidCorrect',correct)}catch(e){}}
 function renderTopics(){ $('topics').innerHTML=topics.map(t=>`<button class="topic" data-topic="${t.id}"><span class="emoji">${t.emoji}</span>${t.name}<span class="small">${t.items.length} từ</span></button>`).join('');document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>openTopic(topics.find(t=>t.id===b.dataset.topic)))}
 function openTopic(t){currentTopic=t;index=0;show('learn');renderWord()}
@@ -100,6 +148,6 @@ $('startBtn').onclick=()=>openTopic(topics[0]);$('homeBtn').onclick=()=>show('ho
 $('listen').onclick=()=>speak(currentTopic.items[index][0],0.82);$('slow').onclick=()=>speak(currentTopic.items[index][0],0.55);
 $('speak').onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('Trình duyệt này chưa hỗ trợ nhận diện giọng nói. Bé vẫn có thể nghe mẫu và nói theo cùng người lớn nhé. Nếu muốn thử micro, hãy mở bằng Chrome và cho phép dùng micro.');return}const r=new SR();r.lang='en-US';r.interimResults=false;r.maxAlternatives=3;$('tip').textContent='🎤 Đang nghe bé nói…';r.onresult=e=>{const said=e.results[0][0].transcript.toLowerCase();const expected=currentTopic.items[index][0].toLowerCase();$('tip').textContent=(said.includes(expected)||expected.includes(said))?'🌟 Bé đã nói: “'+said+'”. Giỏi lắm!':'👏 Anh nghe thấy: “'+said+'”. Cùng nghe mẫu rồi thử lại nhé!';};r.onerror=()=>{$('tip').textContent='Micro chưa nghe rõ. Bé thử nói gần micro hơn, hoặc cùng người lớn nói theo mẫu nhé.'};r.onend=()=>{};try{r.start()}catch(e){$('tip').textContent='Không mở được micro. Hãy kiểm tra quyền micro của trình duyệt.'}};
 $('gameListen').onclick=()=>speak(gameItems[gameIndex%gameItems.length].it[0],0.78);$('nextGame').onclick=()=>{gameIndex++;renderGame()};
-renderTopics();speechSynthesis?.getVoices?.();
+renderTopics();if('speechSynthesis' in window){window.speechSynthesis.getVoices();window.speechSynthesis.addEventListener?.('voiceschanged',()=>window.speechSynthesis.getVoices());}
 </script>
 </body></html>
