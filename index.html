@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#77d8f4">
+<title>English for Kids - Bé học tiếng Anh</title>
+<style>
+:root{--blue:#168eea;--sky:#e9f8ff;--yellow:#ffd84d;--pink:#ff7eae;--green:#67c98b;--ink:#17406e;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#dff7ff,#fff7df);font-family:"Trebuchet MS",system-ui,sans-serif;color:var(--ink);min-height:100vh}
+button{font:inherit;cursor:pointer;border:0;touch-action:manipulation}button:focus-visible{outline:4px solid #ff9b32;outline-offset:3px}
+header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;background:#ffffffd9;position:sticky;top:0;z-index:5;box-shadow:0 3px 14px #2b78a51a}
+.brand{font-size:clamp(20px,4vw,30px);font-weight:1000;color:#1674d1}.brand span{color:#ff7a32}.small{font-size:13px;color:#477398}
+main{max-width:1000px;margin:auto;padding:18px 14px 40px}.hero{background:linear-gradient(120deg,#78ddff,#a8edce);border-radius:28px;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 8px 0 #b5e5e7}
+.hero h1{font-size:clamp(27px,5vw,44px);line-height:1.1;margin:0 0 8px;color:#0757a6}.hero p{margin:0 0 16px;font-size:17px}.mascot{font-size:clamp(65px,12vw,110px);filter:drop-shadow(0 6px 0 #ffffff80)}
+.primary{background:var(--yellow);color:#17406e;border-radius:22px;padding:14px 22px;font-size:18px;font-weight:900;box-shadow:0 5px 0 #e8ae28}.primary:active,.topic:active,.action:active{transform:translateY(2px);box-shadow:none}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:26px 3px 12px}.section-title h2{font-size:23px;margin:0}.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px}
+.topic{border-radius:22px;min-height:130px;padding:14px 8px;background:white;box-shadow:0 5px 0 #cce8ef;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--ink);font-weight:900;font-size:16px}.topic .emoji{font-size:45px}.topic:nth-child(3n+1){background:#e5f9df}.topic:nth-child(3n+2){background:#fff0ef}.topic:nth-child(3n){background:#fff4c9}
+.panel{background:#fff;border-radius:28px;padding:18px;box-shadow:0 7px 0 #d1e9ee;margin-top:18px}.hidden{display:none!important}
+.back{background:#eaf6ff;color:#1766ac;border-radius:14px;padding:10px 14px;font-weight:800}.learn-head{display:flex;align-items:center;gap:10px;justify-content:space-between}.word-card{display:grid;grid-template-columns:1fr;gap:15px;align-items:center;text-align:center;padding:12px 0}.photo{font-size:105px;min-height:170px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#effaff,#e4f8dd);border-radius:24px;overflow:hidden}.photo img{width:100%;height:230px;object-fit:cover}.word{font-size:clamp(36px,7vw,52px);font-weight:1000;margin:8px 0 0;color:#0e66bd}.meaning{font-size:21px;margin:2px 0 14px}.phonetic{font-size:16px;color:#5a7e9d;margin-bottom:10px}
+.actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.action{padding:15px 10px;border-radius:18px;font-weight:900;color:#154d7d;background:#e2f5ff;box-shadow:0 4px 0 #c2e5f2}.action.slow{background:#fff0d7}.action.mic{background:#ffe5f0}.action.next{background:#e2f9e8}
+.note{background:#f4faff;padding:12px 14px;border-radius:16px;margin-top:13px;font-size:14px;line-height:1.5}.progress{height:9px;background:#e4f1f6;border-radius:99px;overflow:hidden;flex:1}.progress span{display:block;height:100%;background:#67ce8b;width:0;transition:width .2s}
+.game-question{text-align:center;font-size:24px;font-weight:900;margin:18px 0}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.choice{min-height:145px;border-radius:22px;background:#f0f9ff;box-shadow:0 5px 0 #d4eaf2;font-size:62px}.choice span{display:block;font-size:16px;font-weight:900;margin-top:8px}.feedback{min-height:35px;text-align:center;font-size:20px;font-weight:900;margin:16px 0 0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#f0faff;border-radius:18px;padding:14px 6px;text-align:center}.stat b{display:block;font-size:27px;color:#1477cf}.stat span{font-size:13px}
+footer{text-align:center;padding:24px 10px;color:#6486a0;font-size:13px}
+@media(min-width:700px){.word-card{grid-template-columns:1fr 1fr;text-align:left}.photo img{height:290px}.word-card .photo{min-height:290px}.word-card .word-details{padding:10px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">🌈 English <span>for Kids</span></div><div class="small">Bé học tiếng Anh thật vui!</div></div><button class="back" id="homeBtn">🏠 Trang chủ</button></header>
+<main>
+<section id="home">
+<div class="hero"><div><h1>Hello, bé yêu! 👋</h1><p>Cùng nghe, nói và chơi tiếng Anh nhé!</p><button class="primary" id="startBtn">▶ Bắt đầu học</button></div><div class="mascot">🧸</div></div>
+<div class="section-title"><h2>📚 Chọn chủ đề</h2><span class="small">Chạm vào hình để học</span></div>
+<div class="topics" id="topics"></div>
+<div class="section-title"><h2>🎮 Chơi và ôn tập</h2></div>
+<div class="topics">
+<button class="topic" id="gameBtn"><span class="emoji">🧩</span>Nghe và chọn hình</button>
+<button class="topic" id="progressBtn"><span class="emoji">⭐</span>Thành tích của bé</button>
+</div>
+<div class="note">👨‍👩‍👧 <b>Dành cho phụ huynh:</b> Mỗi lần học khoảng 5–10 phút. Hãy cùng bé nghe và nói theo thật vui, không cần ép bé phát âm hoàn hảo.</div>
+</section>
+<section id="learn" class="panel hidden">
+<div class="learn-head"><button class="back" id="backTopics">← Chủ đề</button><strong id="topicLabel">🐶 Động vật</strong><div style="display:flex;align-items:center;gap:8px;min-width:100px"><div class="progress"><span id="progressFill"></span></div><span id="count" class="small">1/5</span></div></div>
+<div class="word-card"><div class="photo" id="photo">🐶</div><div class="word-details"><div class="word" id="word">Dog</div><div class="meaning" id="meaning">Con chó</div><div class="phonetic" id="phonetic">/dɔːɡ/</div><div class="actions">
+<button class="action" id="listen">🔊 Nghe mẫu</button><button class="action slow" id="slow">🐢 Nghe chậm</button><button class="action mic" id="speak">🎤 Bé nói theo</button><button class="action next" id="next">Tiếp theo ➜</button>
+</div></div></div>
+<div class="note" id="tip">💡 Nghe mẫu trước, sau đó cùng bé nói theo. Khen bé khi bé cố gắng nhé!</div>
+</section>
+<section id="game" class="panel hidden">
+<div class="learn-head"><button class="back" id="backGame">← Trang chủ</button><strong>🎮 Nghe và chọn hình</strong><span class="small" id="gameCount">1/5</span></div>
+<div class="game-question" id="gameQuestion">Nghe từ này rồi chọn đúng hình nhé!</div>
+<div style="text-align:center"><button class="primary" id="gameListen">🔊 Nghe từ</button></div>
+<div class="choices" id="choices"></div><div class="feedback" id="feedback"></div>
+<div style="text-align:center;margin-top:8px"><button class="primary hidden" id="nextGame">Câu tiếp theo ➜</button></div>
+</section>
+<section id="stats" class="panel hidden">
+<div class="learn-head"><button class="back" id="backStats">← Trang chủ</button><strong>⭐ Thành tích của bé</strong></div>
+<div class="stats" style="margin-top:20px"><div class="stat"><b id="learnedStat">0</b><span>Từ đã học</span></div><div class="stat"><b id="gameStat">0</b><span>Câu đúng</span></div><div class="stat"><b id="starStat">0</b><span>Ngôi sao</span></div></div>
+<div class="note">Bé học mỗi ngày một chút là giỏi lắm rồi! 🌟 Thành tích được lưu trên thiết bị này nếu trình duyệt cho phép.</div>
+</section>
+</main>
+<footer>Made with ❤️ for little learners · Giọng đọc phụ thuộc vào giọng tiếng Anh có sẵn trên thiết bị.</footer>
+<script>
+const topics=[
+ {id:'animals',name:'Động vật',emoji:'🐾',items:[
+  ['Dog','Con chó','🐶','/dɔːɡ/','A dog says woof!'],['Cat','Con mèo','🐱','/kæt/','A cat says meow!'],['Bird','Con chim','🐦','/bɝːd/','A bird can fly.'],['Fish','Con cá','🐠','/fɪʃ/','A fish can swim.'],['Duck','Con vịt','🦆','/dʌk/','A duck says quack!']]},
+ {id:'fruit',name:'Trái cây',emoji:'🍎',items:[
+  ['Apple','Quả táo','🍎','/ˈæp.əl/','An apple is red.'],['Banana','Quả chuối','🍌','/bəˈnæn.ə/','A banana is yellow.'],['Orange','Quả cam','🍊','/ˈɔːr.ɪndʒ/','An orange is orange.'],['Grapes','Quả nho','🍇','/ɡreɪps/','Grapes are yummy!'],['Strawberry','Quả dâu tây','🍓','/ˈstrɔːˌber.i/','A strawberry is red.']]},
+ {id:'colors',name:'Màu sắc',emoji:'🎨',items:[
+  ['Red','Màu đỏ','🟥','/red/','Red like an apple.'],['Blue','Màu xanh dương','🟦','/bluː/','Blue like the sky.'],['Yellow','Màu vàng','🟨','/ˈjel.oʊ/','Yellow like a banana.'],['Green','Màu xanh lá','🟩','/ɡriːn/','Green like a leaf.'],['Pink','Màu hồng','🩷','/pɪŋk/','Pink is a pretty color.']]},
+ {id:'numbers',name:'Số đếm',emoji:'🔢',items:[
+  ['One','Số một','1️⃣','/wʌn/','One little star.'],['Two','Số hai','2️⃣','/tuː/','Two little hands.'],['Three','Số ba','3️⃣','/θriː/','Three little bears.'],['Four','Số bốn','4️⃣','/fɔːr/','Four toy cars.'],['Five','Số năm','5️⃣','/faɪv/','High five!']]},
+ {id:'family',name:'Gia đình',emoji:'👨‍👩‍👧',items:[
+  ['Mom','Mẹ','👩','/mɑːm/','I love my mom.'],['Dad','Bố','👨','/dæd/','I love my dad.'],['Baby','Em bé','👶','/ˈbeɪ.bi/','Hello, baby!'],['Sister','Chị/em gái','👧','/ˈsɪs.tɚ/','This is my sister.'],['Brother','Anh/em trai','👦','/ˈbrʌð.ɚ/','This is my brother.']]},
+ {id:'toys',name:'Đồ chơi',emoji:'🧸',items:[
+  ['Teddy bear','Gấu bông','🧸','/ˈted.i ber/','Hug your teddy bear.'],['Ball','Quả bóng','⚽','/bɔːl/','Throw the ball.'],['Car','Xe ô tô đồ chơi','🚗','/kɑːr/','A little red car.'],['Doll','Búp bê','🪆','/dɑːl/','This is my doll.'],['Blocks','Khối xếp hình','🧱','/blɑːks/','Let’s build!']]},
+ {id:'vehicles',name:'Phương tiện',emoji:'🚗',items:[
+  ['Car','Ô tô','🚗','/kɑːr/','Beep beep!'],['Bus','Xe buýt','🚌','/bʌs/','The bus is big.'],['Train','Tàu hỏa','🚂','/treɪn/','Choo choo!'],['Bike','Xe đạp','🚲','/baɪk/','Ride a bike.'],['Airplane','Máy bay','✈️','/ˈer.pleɪn/','An airplane flies.']]},
+ {id:'daily',name:'Chào hỏi',emoji:'👋',items:[
+  ['Hello','Xin chào','👋','/həˈloʊ/','Hello, friend!'],['Bye-bye','Tạm biệt','👋','/ˌbaɪˈbaɪ/','Bye-bye!'],['Please','Làm ơn','🙏','/pliːz/','Say please.'],['Thank you','Cảm ơn','💖','/ˈθæŋk juː/','Thank you so much!'],['Goodbye','Tạm biệt','🌈','/ˌɡʊdˈbaɪ/','See you soon!']]}
+];
+let currentTopic=topics[0],index=0,gameItems=[],gameIndex=0,correct=0,answered=false;
+let learned=new Set(),stars=0;
+try{learned=new Set(JSON.parse(localStorage.getItem('kidLearned')||'[]'));stars=+(localStorage.getItem('kidStars')||0);correct=+(localStorage.getItem('kidCorrect')||0)}catch(e){}
+const $=id=>document.getElementById(id);
+function show(id){['home','learn','game','stats'].forEach(x=>$(x).classList.toggle('hidden',x!==id));window.scrollTo({top:0,behavior:'smooth'})}
+function speak(text,rate=0.82){if(!('speechSynthesis'in window)){alert('Thiết bị này chưa hỗ trợ đọc tiếng Anh. Hãy thử mở bằng Chrome và kiểm tra cài đặt giọng nói.');return}
+ speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=rate;u.pitch=1.05;
+ const voices=speechSynthesis.getVoices();const v=voices.find(v=>v.lang==='en-US'&&/Samantha|Jenny|Aria|Google US English|United States/i.test(v.name))||voices.find(v=>v.lang==='en-US')||voices.find(v=>v.lang.startsWith('en'));if(v)u.voice=v;speechSynthesis.speak(u)}
+function persist(){try{localStorage.setItem('kidLearned',JSON.stringify([...learned]));localStorage.setItem('kidStars',stars);localStorage.setItem('kidCorrect',correct)}catch(e){}}
+function renderTopics(){ $('topics').innerHTML=topics.map(t=>`<button class="topic" data-topic="${t.id}"><span class="emoji">${t.emoji}</span>${t.name}<span class="small">${t.items.length} từ</span></button>`).join('');document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>openTopic(topics.find(t=>t.id===b.dataset.topic)))}
+function openTopic(t){currentTopic=t;index=0;show('learn');renderWord()}
+function renderWord(){const it=currentTopic.items[index];$('topicLabel').textContent=currentTopic.emoji+' '+currentTopic.name;$('photo').textContent=it[2];$('word').textContent=it[0];$('meaning').textContent=it[1];$('phonetic').textContent=it[3];$('count').textContent=(index+1)+'/'+currentTopic.items.length;$('progressFill').style.width=((index+1)/currentTopic.items.length*100)+'%';$('tip').textContent='💡 '+it[4]+' Hãy nghe mẫu trước, rồi cùng bé nói theo.';learned.add(currentTopic.id+':'+index);persist()}
+function nextWord(){if(index<currentTopic.items.length-1){index++;renderWord()}else{stars++;persist();alert('🎉 Tuyệt vời! Bé đã hoàn thành chủ đề '+currentTopic.name+'!');show('home')}}
+function startGame(){gameItems=topics.flatMap(t=>t.items.map(it=>({it,topic:t.name})));gameItems.sort(()=>Math.random()-.5);gameIndex=0;show('game');renderGame()}
+function renderGame(){answered=false;const target=gameItems[gameIndex%gameItems.length];$('gameCount').textContent=(gameIndex+1)+'/'+gameItems.length;$('feedback').textContent='';$('nextGame').classList.add('hidden');$('gameQuestion').textContent='Nghe từ này rồi chọn đúng hình nhé!';let opts=[target];while(opts.length<4){let x=gameItems[Math.floor(Math.random()*gameItems.length)];if(!opts.includes(x))opts.push(x)}opts.sort(()=>Math.random()-.5);$('choices').innerHTML=opts.map(o=>`<button class="choice" data-answer="${gameItems.indexOf(o)}">${o.it[2]}<span>Chọn hình</span></button>`).join('');document.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>answerGame(gameItems[+b.dataset.answer]===target,target))}
+function answerGame(ok,target){if(answered)return;answered=true;if(ok){correct++;stars++;$('feedback').textContent='🌟 Giỏi quá! That’s right!';}else{$('feedback').textContent='😊 Mình thử lại lần sau nhé! Đáp án: '+target.it[0]}persist();$('nextGame').classList.remove('hidden');}
+function stats(){show('stats');$('learnedStat').textContent=learned.size;$('gameStat').textContent=correct;$('starStat').textContent=stars}
+$('startBtn').onclick=()=>openTopic(topics[0]);$('homeBtn').onclick=()=>show('home');$('backTopics').onclick=()=>show('home');$('backGame').onclick=()=>show('home');$('backStats').onclick=()=>show('home');$('gameBtn').onclick=startGame;$('progressBtn').onclick=stats;$('next').onclick=nextWord;
+$('listen').onclick=()=>speak(currentTopic.items[index][0],0.82);$('slow').onclick=()=>speak(currentTopic.items[index][0],0.55);
+$('speak').onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('Trình duyệt này chưa hỗ trợ nhận diện giọng nói. Bé vẫn có thể nghe mẫu và nói theo cùng người lớn nhé. Nếu muốn thử micro, hãy mở bằng Chrome và cho phép dùng micro.');return}const r=new SR();r.lang='en-US';r.interimResults=false;r.maxAlternatives=3;$('tip').textContent='🎤 Đang nghe bé nói…';r.onresult=e=>{const said=e.results[0][0].transcript.toLowerCase();const expected=currentTopic.items[index][0].toLowerCase();$('tip').textContent=(said.includes(expected)||expected.includes(said))?'🌟 Bé đã nói: “'+said+'”. Giỏi lắm!':'👏 Anh nghe thấy: “'+said+'”. Cùng nghe mẫu rồi thử lại nhé!';};r.onerror=()=>{$('tip').textContent='Micro chưa nghe rõ. Bé thử nói gần micro hơn, hoặc cùng người lớn nói theo mẫu nhé.'};r.onend=()=>{};try{r.start()}catch(e){$('tip').textContent='Không mở được micro. Hãy kiểm tra quyền micro của trình duyệt.'}};
+$('gameListen').onclick=()=>speak(gameItems[gameIndex%gameItems.length].it[0],0.78);$('nextGame').onclick=()=>{gameIndex++;renderGame()};
+renderTopics();speechSynthesis?.getVoices?.();
+</script>
+</body></html>
